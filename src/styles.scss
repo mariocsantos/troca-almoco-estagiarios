@@ -1,1 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~ng-smn-ui/lib/core/core";
+@import "~ng-smn-ui/lib/core/theme";
+@import "~ng-smn-ui/lib/core/variables";
+
+$primary: (color: 'blue', hue: '500');
+$accent: (color: 'green', hue: '50');
+$theme: ui-theme($primary, $accent, true); 
+
+@include ui-core();
+
+@include ui-build-theme($theme);
+
+body {
+    background-color: ui-color('blue-grey', '900');
+}
+
+.theme-light {
+    ui-card {
+        background-color: white;
+    }
+}
