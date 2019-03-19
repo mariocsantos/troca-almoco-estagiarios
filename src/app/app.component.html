@@ -14,60 +14,72 @@
     </div>
 </ui-toolbar>
 <div class="card-container theme-light">
-    <ui-card *ngFor="let cardapio of cardapios" tabindex="1" [class.expand]="cardapio.data.getTime() === hoje.getTime()">
-        <ui-card-title [style.background-color]="cardapio.cor">
-            <div class="dia">
-                <span>{{cardapio.data | date: 'dd'}}</span> {{getMes(cardapio.data)}}
-            </div>
-            <div class="semana">{{getSemana(cardapio.data)}}</div>
-        </ui-card-title>
-        <ui-card-content [style.background-color]="cardapio.cor">
-            <div>{{cardapio.pratoPrincipal}}</div>
-            <button class="ui-button raised" uiRipple>Trocar</button>
-        </ui-card-content>
-        <ul class="ui-list">
-            <li class="multi-line">
-                <div class="lines">
-                    <div class="primary">
-                        {{cardapio.guarnicao}}
-                    </div>
-                    <div class="secondary">
-                        Guarnição
-                    </div>
+    <div class="card-wrap">
+        <ui-card *ngFor="let cardapio of cardapios" 
+                 tabindex="1" 
+                 [class.expand]="cardapio.data.getTime() === hoje.getTime()">
+            <ui-card-title [style.background-color]="cardapio.cor">
+                <div class="dia">
+                    <span>{{cardapio.data | date: 'dd'}}</span> {{getMes(cardapio.data)}}
                 </div>
-            </li>
-            <li class="multi-line">
-                <div class="lines">
-                    <div class="primary">
-                        {{cardapio.salada1}}
-                    </div>
-                    <div class="secondary">
-                        Salada I
-                    </div>
+                <div class="semana">{{getSemana(cardapio.data)}}</div>
+            </ui-card-title>
+            <ui-card-content [style.background-color]="cardapio.cor">
+                <div [ngSwitch]="cardapio.troca">
+                    <div *ngSwitchCase="'O'">Omelete com queijo</div>
+                    <div *ngSwitchCase="'F'">Frango</div>
+                    <div *ngSwitchDefault>{{cardapio.pratoPrincipal}}</div>
                 </div>
-            </li>
-            <li class="multi-line">
-                <div class="lines">
-                    <div class="primary">
-                        {{cardapio.salada2}}
+                <button class="ui-button raised"
+                        uiRipple 
+                        (click)="cardapioSelecionado = cardapio"
+                        [uiMenuTrigger]="menuTroca" 
+                        theme-class="light">Trocar</button>
+            </ui-card-content>
+            <ul class="ui-list">
+                <li class="multi-line">
+                    <div class="lines">
+                        <div class="primary">
+                            {{cardapio.guarnicao}}
+                        </div>
+                        <div class="secondary">
+                            Guarnição
+                        </div>
                     </div>
-                    <div class="secondary">
-                        Salada II
+                </li>
+                <li class="multi-line">
+                    <div class="lines">
+                        <div class="primary">
+                            {{cardapio.salada1}}
+                        </div>
+                        <div class="secondary">
+                            Salada I
+                        </div>
                     </div>
-                </div>
-            </li>
-            <li class="multi-line">
-                <div class="lines">
-                    <div class="primary">
-                        {{cardapio.sobremesa}}
+                </li>
+                <li class="multi-line">
+                    <div class="lines">
+                        <div class="primary">
+                            {{cardapio.salada2}}
+                        </div>
+                        <div class="secondary">
+                            Salada II
+                        </div>
                     </div>
-                    <div class="secondary">
-                        Sobremesa
+                </li>
+                <li class="multi-line">
+                    <div class="lines">
+                        <div class="primary">
+                            {{cardapio.sobremesa}}
+                        </div>
+                        <div class="secondary">
+                            Sobremesa
+                        </div>
                     </div>
-                </div>
-            </li>
-        </ul>
-    </ui-card>
+                </li>
+            </ul>
+        </ui-card>
+    </div>
 </div>
 <!-- <footer>
     <button class="ui-button flat" uiRipple>Anterior</button>
@@ -79,3 +91,10 @@
     </div>
     <button class="ui-button flat" uiRipple>Próximo</button>
 </footer> -->
+<ui-menu #menuTroca>
+    <div class="ui-menu-content size-2x">
+        <div class="ui-menu-item" uiRipple (click)="cardapioSelecionado.troca = 'F'" *ngIf="cardapioSelecionado.troca !=='F'">Frango</div>
+        <div class="ui-menu-item" uiRipple (click)="cardapioSelecionado.troca = 'O'" *ngIf="cardapioSelecionado.troca !=='O'">Omelete com queijo</div>
+        <div class="ui-menu-item" uiRipple (click)="cardapioSelecionado.troca = null" *ngIf="cardapioSelecionado.troca">{{cardapioSelecionado.pratoPrincipal}}</div>
+    </div>
+</ui-menu>

@@ -14,6 +14,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   meses: any[];
   diasSemana: any[];
 
+  cardapioSelecionado: any;
+
   constructor(datetimeService: UiDatetimeService) {
     this.hoje = new Date();
     this.hoje.setHours(0, 0, 0, 0);
@@ -23,6 +25,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
     this.meses = datetimeService.months;
     this.diasSemana = datetimeService.days;
+
+    this.cardapioSelecionado = {};
   }
 
   ngOnInit() {
@@ -31,7 +35,6 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    
   }
 
   getUsuario() {
@@ -41,7 +44,7 @@ export class AppComponent implements OnInit, AfterViewInit {
       cor: '#009688',
       imagem: '',
       cargo: 'Desenvolvedor front-end'
-    }
+    };
   }
 
   getCardapio() {
@@ -98,8 +101,8 @@ export class AppComponent implements OnInit, AfterViewInit {
     } else if (day === 6) {
       date.setDate(date.getDate() + 2)
     } else {
-      var diff = date.getDate() - day + (day == 0 ? -6 : 1);
-      date.setDate(diff)
+      const diff = date.getDate() - day + (day === 0 ? -6 : 1);
+      date.setDate(diff);
     }
 
     return date;

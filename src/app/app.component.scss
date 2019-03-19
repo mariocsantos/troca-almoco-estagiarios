@@ -35,14 +35,39 @@
     }
 }
 
+::ng-deep .light {
+    &.wrap-menu ui-card {
+        background-color: #FFF;
+        color: rgba(#000, .87);
+
+        .ui-menu-item {
+            &:hover {
+                background-color: rgba(#000, 0.1);
+            }
+
+            .ui-ripple-wave {
+                background-color: rgba(33, 33, 33, 0.1);
+            }
+        }
+
+    }
+}
+
 .card-container {
-    display: flex;
-    flex-wrap: nowrap;
-    overflow-x: auto;
-    overflow-y: hidden;
     flex: 1;
-    align-items: center;
-    padding: 8px;
+    display: flex;
+    justify-content: center;
+
+    .card-wrap {
+        flex: 1;
+        display: flex;
+        flex-wrap: nowrap;
+        align-items: center;
+        overflow-x: auto;
+        overflow-y: hidden;
+        padding: 8px;
+        max-width: 1565px;
+    }
 
     ui-card {
         $width: 292px;
@@ -102,6 +127,14 @@
 
         button {
             margin-left: 8px;
+        }
+    }
+
+    @include mobile() {
+        ui-card {
+            $width: 100%;
+            max-width: $width;
+            min-width: $width;
         }
     }
 }
